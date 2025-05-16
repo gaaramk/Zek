@@ -5,6 +5,23 @@ import { Star } from "lucide-react";
 import ButtonAdd from "../../_components/ButtonAdd";
 import SwiperGallery from "../../_components/Swiper";
 
+
+
+export async function generateStaticParams() {
+  const res = await axios.get(
+    "https://ecommerce.routemisr.com/api/v1/products"
+  );
+  const products = res.data.data;
+
+  return products.map((product) => ({
+    id: product._id,
+  }));
+}
+
+
+
+
+
 const ProductDetails = async ({ params }) => {
   const allProducts = await Api.getProducts();
 

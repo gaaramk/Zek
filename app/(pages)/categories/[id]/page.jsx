@@ -1,6 +1,16 @@
 import Product from "@/app/_components/Product";
 import Api from "@/app/_utils/Api";
 
+
+
+export async function generateStaticParams() {
+  const categories = await Api.getAllCategories();
+  return categories.map((category) => ({
+    id: category._id,
+  }));
+}
+
+
 const Categories = async ({ params }) => {
   const category = await Api.getSpecificCategory(params.id);
   const subCategories = await Api.getSubCategoriesOnCategory(params.id);
@@ -9,7 +19,6 @@ const Categories = async ({ params }) => {
     (item) => item.category.name === category.name
   );
 
-  console.log(productsByCategory);
 
   return (
     <>
